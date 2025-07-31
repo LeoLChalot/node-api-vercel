@@ -25,7 +25,8 @@ app.get('/', (req, res) => {
 
 app.get('/action', (req, res) => {
 
-  res.status(200).json(generateRandomMovement());
+  // res.status(200).json(generateRandomMovement());
+  res.send(200).json(mouvement)
 });
 
 app.post('/action', (req, res) => {
