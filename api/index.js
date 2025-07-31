@@ -31,8 +31,14 @@ app.get('/action', (req, res) => {
 
 app.post('/action', (req, res) => {
   const { move, action } = req.body;
-  mouvement = { "move": move, "action": action };
-  res.status(200).json({ message: "Mouvement enregistré" });
+  if (moves.includes(move) && actions.includes(action)) {
+    mouvement = { move, action };
+    console.log('Mouvement reçu et enregistré :', mouvement);
+    res.status(200).json({ message: "Mouvement enregistré avec succès.", current: mouvement });
+  } else {
+    console.warn('Mouvement non valide. Aucune modification.');
+    res.status(400).json({ message: "Mouvement ou action non valide." });
+  }
 });
 
 app.listen(3000, () => console.log('Server ready on port 3000.'));
