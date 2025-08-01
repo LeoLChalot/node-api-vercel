@@ -3,9 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
-
 const app = express();
 app.use(bodyParser.json());
+
 app.use(cors());
 
 
@@ -59,12 +59,12 @@ const selectMouvement = 'SELECT move, action FROM mouvements ORDER BY created_at
 const planifierProchainMouvement = 'INSERT INTO mouvements(move, action) VALUES($1, $2) RETURNING *';
 
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({ message: "Hello Bot Trainer !" });
 });
 
 
-router.get('/action', async (req, res) => {
+app.get('/action', async (req, res) => {
   try {
     const req = selectMouvement;
     const result = await pool.query(req);
@@ -84,7 +84,7 @@ router.get('/action', async (req, res) => {
 });
 
 
-router.post('/action', async (req, res) => {
+app.post('/action', async (req, res) => {
   const { move, action } = req.body;
 
   if (!moves.includes(move) || !actions.includes(action)) {
@@ -108,4 +108,4 @@ router.post('/action', async (req, res) => {
 
 app.listen(3000, () => console.log('Server ready on port 3000.'));
 
-module.exports = app;
+// module.exports = app;
