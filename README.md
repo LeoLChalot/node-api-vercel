@@ -6,3 +6,7 @@
 
 `./github/workflows/*.yaml` : Fichers de configuration de workflows
 
+![alt text](image.png)
+
+# Workflows
+Les workflows se décomposent comme suit : 
