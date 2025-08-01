@@ -55,11 +55,9 @@ const planifierProchainMouvement = 'INSERT INTO mouvements(move, action) VALUES(
 const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
 const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
 
-
 app.get('/', (req, res) => {
   res.status(200).json({ message: "Hello Bot Trainer !" });
 });
-
 
 app.get('/action', async (req, res) => {
   try {
@@ -79,7 +77,6 @@ app.get('/action', async (req, res) => {
     res.status(500).json({ message: "Erreur serveur lors de la récupération." });
   }
 });
-
 
 app.post('/action', async (req, res) => {
   const { move, action } = req.body;
