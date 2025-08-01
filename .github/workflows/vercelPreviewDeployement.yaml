@@ -1,4 +1,4 @@
-name: Vercel Prevew Deployment
+name: Vercel Preview Deployment
 env:
   VERCEL_ENVIRONMENT: preview
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -19,4 +19,4 @@ jobs:
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: npx vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --prebuilt
+        run: npx vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
