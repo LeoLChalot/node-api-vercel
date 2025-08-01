@@ -5,19 +5,17 @@ env:
 on:
   pull_request:
     branches:
-      - main
+      - preview
 jobs:
-  Deploy-Production:
+  Deploy-Preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: npx vercel deploy --no-wait --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Construction de l'image Docker
-        run: docker build -t bot-trainer-app .
+        run: npx vercel deploy --prebuilt --no-wait --token=${{ secrets.VERCEL_TOKEN }}
