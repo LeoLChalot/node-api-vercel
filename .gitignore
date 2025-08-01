@@ -1,8 +1,6 @@
 node_modules/
 package-lock.json
-controller.html
 .vercel
-client/
-controller/
 .env.*
 .env
+
