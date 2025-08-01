@@ -38,21 +38,6 @@ async function initDb() {
 initDb();
 
 
-const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
-const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
-
-// =============================================================================
-// UNIQUEMENT POUR JOUER EN ALEATOIRE
-function mouvementAleatoire() {
-  const randomMoveIndex = Math.floor(Math.random() * moves.length);
-  const randomActionIndex = Math.floor(Math.random() * actions.length);
-  return {
-    move: moves[randomMoveIndex],
-    action: actions[randomActionIndex]
-  };
-}
-// =============================================================================
-
 // Les deux requêtes à exécuter pour récupêrer ou enregistrer le mourvmement
 // SELECT 
 const selectMouvement = 'SELECT move, action FROM mouvements ORDER BY created_at DESC LIMIT 1';
@@ -107,6 +92,6 @@ app.post('/action', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('Server ready on port 3000.'));
+// app.listen(3000, () => console.log('API sur le port 3000.'));
 
-// module.exports = app;
+module.exports = app;
