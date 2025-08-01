@@ -1,0 +1,32 @@
+# .github/workflows/tests.yml
+
+name: Tests Jest et Build de l'image
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write # Pour ajouter l'image à la fin du proc
+
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v4
+
+    - name: Configuration de Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    
+    - name: Installation des dépendances
+      run: npm install
+
+    - name: Exécution des tests
+      run: npm test
+
+    # SI les tests sont OK
+    - name: Construction de l'image Docker
+      run: docker build -t bot-trainer-app .
