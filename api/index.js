@@ -44,6 +44,10 @@ const selectMouvement = 'SELECT move, action FROM mouvements ORDER BY created_at
 // INSERT
 const planifierProchainMouvement = 'INSERT INTO mouvements(move, action) VALUES($1, $2) RETURNING *';
 
+// Liste des choix possibles
+const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
+const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
+
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: "Hello Bot Trainer !" });
