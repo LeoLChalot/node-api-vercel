@@ -3,22 +3,47 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { initDb, pool } = require('./db');
-
+const { Pool } = require('pg');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+async function initDb() {
+  try {
+    const client = await pool.connect();
+    const creationTableMouvement = `
+      CREATE TABLE IF NOT EXISTS mouvements (
+        id SERIAL PRIMARY KEY,
+        move TEXT NOT NULL,
+        action TEXT NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      );
+    `;
+    await client.query(creationTableMouvement);
+    client.release();
+    console.log('Table "mouvements" ok');
+  } catch (e) {
+    console.error('Erreur lors de l\'initialisation de la base de données :', e);
+  }
+}
+
 initDb();
 
 
 // =============================================================================
-// UNIQUEMENT POUR JOUER EN ALEATOIR
-const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
-const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
-
+// UNIQUEMENT POUR JOUER EN ALEATOIRE
 function mouvementAleatoire() {
+  const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
+  const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
   const randomMoveIndex = Math.floor(Math.random() * moves.length);
   const randomActionIndex = Math.floor(Math.random() * actions.length);
   return {
@@ -29,7 +54,6 @@ function mouvementAleatoire() {
 // =============================================================================
 
 // Les deux requêtes à exécuter pour récupêrer ou enregistrer le mourvmement
-
 // SELECT 
 const selectMouvement = 'SELECT move, action FROM mouvements ORDER BY created_at DESC LIMIT 1';
 // INSERT
