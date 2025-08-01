@@ -4,3 +4,4 @@ controller.html
 .vercel
 client/
 controller/
+.env*.local
