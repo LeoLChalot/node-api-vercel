@@ -9,6 +9,9 @@
 # Description du projet
 API REST conçue pour piloter un bot, probablement dans un contexte de jeu (d'où le nom "botwar"). L'API permet de définir et de récupérer la prochaine action que le bot doit effectuer.
 
+# URL du bot
+Le bot est accessible à l'url : https://node-api-vercel-teal-phi.vercel.app
+
 ## Stack technique
 - API : Nodejs + Express
 - DB : Postgres (Vercel Neon Database)
