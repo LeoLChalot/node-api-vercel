@@ -38,11 +38,12 @@ async function initDb() {
 initDb();
 
 
+const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
+const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
+
 // =============================================================================
 // UNIQUEMENT POUR JOUER EN ALEATOIRE
 function mouvementAleatoire() {
-  const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
-  const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
   const randomMoveIndex = Math.floor(Math.random() * moves.length);
   const randomActionIndex = Math.floor(Math.random() * actions.length);
   return {
