@@ -2,11 +2,11 @@
 const app = require('../index');
 const mouvementAleatoire = require ('../aleatoire')
 
-
 describe('Test général des routes / méthodes', () => {
 
   // Test de la fonction de mouvement aléatoire
   describe('mouvementAleatoire()', () => {
+
     // Je vérifie que la fonction retourne un objet avec les bonnes propriétés.
     test('devrait retourner un objet avec les propriétés move et action', () => {
       const result = mouvementAleatoire();
@@ -34,8 +34,6 @@ describe('Test général des routes / méthodes', () => {
     const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
     const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
 
-    // Je vais créer un petit "utilitaire" de validation pour l'exemple.
-    // C'est ce qui se passe implicitement dans ta route POST.
     function isValidMovement(move, action) {
       return moves.includes(move) && actions.includes(action);
     }
