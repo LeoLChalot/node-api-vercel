@@ -1,47 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { Pool } = require('pg'); 
+
+const { initDb } = require('./db/db');
 require('dotenv').config();
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-async function initDb() {
-  try {
-    const client = await pool.connect();
-    const queryText = `
-      CREATE TABLE IF NOT EXISTS mouvements (
-        id SERIAL PRIMARY KEY,
-        move TEXT NOT NULL,
-        action TEXT NOT NULL,
-        created_at TIMESTAMPTZ DEFAULT NOW()
-      );
-    `;
-    await client.query(queryText);
-    client.release();
-    console.log('Table "mouvements" vérifiée ou créée avec succès.');
-  } catch (err) {
-    console.error('Erreur lors de l\'initialisation de la base de données :', err);
-  }
-}
-
 initDb();
 
-// let mouvement = { "move": "STAY", "action": "NONE" };
+
+// =============================================================================
+// UNIQUEMENT POUR JOUER EN ALEATOIR
 const moves = ["UP", "DOWN", "RIGHT", "LEFT", "STAY"];
 const actions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
 
-function generateRandomMovement() {
+function mouvementAleatoire() {
   const randomMoveIndex = Math.floor(Math.random() * moves.length);
   const randomActionIndex = Math.floor(Math.random() * actions.length);
   return {
@@ -49,15 +25,24 @@ function generateRandomMovement() {
     action: actions[randomActionIndex]
   };
 }
+// =============================================================================
 
-app.get('/', (req, res) => {
+// Les deux requêtes à exécuter pour récupêrer ou enregistrer le mourvmement
+// SELECT 
+const selectMouvement = 'SELECT move, action FROM mouvements ORDER BY created_at DESC LIMIT 1';
+// INSERT
+const planifierProchainMouvement = 'INSERT INTO mouvements(move, action) VALUES($1, $2) RETURNING *';
+
+
+router.get('/', (req, res) => {
   res.status(200).json({ message: "Hello Bot Trainer !" });
 });
 
-app.get('/action', async (req, res) => {
+
+router.get('/action', async (req, res) => {
   try {
-    const queryText = 'SELECT move, action FROM mouvements ORDER BY created_at DESC LIMIT 1';
-    const result = await pool.query(queryText);
+    const req = selectMouvement;
+    const result = await pool.query(req);
 
     if (result.rows.length > 0) {
       const lastMouvement = result.rows[0];
@@ -73,7 +58,8 @@ app.get('/action', async (req, res) => {
   }
 });
 
-app.post('/action', async (req, res) => {
+
+router.post('/action', async (req, res) => {
   const { move, action } = req.body;
 
   if (!moves.includes(move) || !actions.includes(action)) {
@@ -82,9 +68,9 @@ app.post('/action', async (req, res) => {
   }
 
   try {
-    const queryText = 'INSERT INTO mouvements(move, action) VALUES($1, $2) RETURNING *';
+    const req = planifierProchainMouvement;
     const values = [move, action];
-    const result = await pool.query(queryText, values);
+    const result = await pool.query(req, values);
     const newMouvement = result.rows[0];
 
     console.log('Mouvement enregistré dans la BDD :', newMouvement);
