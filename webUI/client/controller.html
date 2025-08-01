@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controller</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+</head>
+
+<body
+  class="bg-gray-900 text-slate-100 flex items-center justify-center min-h-screen p-4">
+  <div
+    class="bg-slate-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg space-y-6 border border-slate-700">
+    <h1 class="text-3xl font-bold text-center text-indigo-400">Contrôle des
+      actions</h1>
+    <div class="space-y-4">
+      <div>
+        <label
+          class="block text-sm font-medium text-slate-300 mb-1">Mouvement</label>
+        <div class="grid grid-cols-5 gap-2">
+          <div>
+            <input type="radio" id="move-up" name="move" value="UP"
+              class="peer hidden" />
+            <label for="move-up"
+              class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">UP</label>
+          </div>
+
+          <div>
+            <input type="radio" id="move-down" name="move" value="DOWN"
+              class="peer hidden" />
+            <label for="move-down"
+              class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">DOWN</label>
+          </div>
+
+          <div>
+            <input type="radio" id="move-left" name="move" value="LEFT"
+              class="peer hidden" />
+            <label for="move-left"
+              class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">LEFT</label>
+          </div>
+
+          <div>
+            <input type="radio" id="move-right" name="move" value="RIGHT"
+              class="peer hidden" />
+            <label for="move-right"
+              class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">RIGHT</label>
+          </div>
+
+          <div>
+            <input type="radio" id="move-stay" name="move" value="STAY"
+              class="peer hidden" checked />
+            <label for="move-stay"
+              class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">STAY</label>
+          </div>
+
+        </div>
+        <div>
+          <label
+            class="block text-sm font-medium text-slate-300 mb-1">Action</label>
+
+          <div class="grid grid-cols-4 gap-2">
+            <div>
+              <input type="radio" id="action-collect" name="action"
+                value="COLLECT" class="peer hidden" />
+              <label for="action-collect"
+                class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">COLLECT</label>
+            </div>
+
+            <div>
+              <input type="radio" id="action-attack" name="action"
+                value="ATTACK" class="peer hidden" />
+              <label for="action-attack"
+                class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">ATTACK</label>
+            </div>
+
+            <div>
+              <input type="radio" id="action-bomb" name="action" value="BOMB"
+                class="peer hidden" />
+              <label for="action-bomb"
+                class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">BOMB</label>
+            </div>
+
+            <div>
+              <input type="radio" id="action-none" name="action" value="NONE"
+                class="peer hidden" checked />
+              <label for="action-none"
+                class="block cursor-pointer select-none rounded-md p-2 text-center text-slate-200 bg-slate-700 peer-checked:bg-indigo-500 peer-checked:font-bold">NONE</label>
+            </div>
+
+          </div>
+
+          <button id="sendButton"
+            class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 mt-4">
+            Envoyer à l'API (POST)
+          </button>
+        </div>
+
+        <hr class="border-slate-700">
+
+        <div class="space-y-4">
+          <h2 class="text-2xl font-bold text-center text-indigo-400">Résultats
+          </h2>
+          <div id="resultDisplay"
+            class="bg-slate-700 p-4 rounded-md text-slate-300 min-h-[80px] flex items-center justify-center">
+            <span id="initialMessage">Aucune donnée récupérée pour
+              l'instant.</span>
+          </div>
+        </div>
+      </div>
+      <script src="./js/api.js"></script>
+</body>
+
+</html>
